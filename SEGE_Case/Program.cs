@@ -1,4 +1,4 @@
-using Amazon.DynamoDBv2;
+﻿using Amazon.DynamoDBv2;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.DynamoDBv2.DataModel;
 using SEGE_Case.Application.Interfaces;
@@ -10,17 +10,32 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Add AWS services to the container.
+// AWS hizmetlerini container'a ekler.
 var awsOptions = builder.Configuration.GetAWSOptions();
+
+// Uygulama ayarlarından AWS seçeneklerini alır.
 builder.Services.AddDefaultAWSOptions(awsOptions);
+
+// Amazon DynamoDB hizmetini ekler.
 builder.Services.AddAWSService<IAmazonDynamoDB>();
+
+// IDynamoDBContext'i DynamoDBContext uygulamasıyla singleton olarak ekler.
 builder.Services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
 
+// IHeroRepository'i HeroRepository uygulamasıyla scoped olarak ekler.
+// Scoped: Bu servis, her HTTP isteği için yeni bir örnek oluşturur.
 builder.Services.AddScoped<IHeroRepository, HeroRepository>();
+
+// IEnemyRepository'i EnemyRepository uygulamasıyla scoped olarak ekler.
 builder.Services.AddScoped<IEnemyRepository, EnemyRepository>();
 
+// BattleSimulator sınıfını scoped olarak ekler.
 builder.Services.AddScoped<BattleSimulator>();
+
+// HeroService sınıfını scoped olarak ekler.
 builder.Services.AddScoped<HeroService>();
+
+// EnemyService sınıfını scoped olarak ekler.
 builder.Services.AddScoped<EnemyService>();
 
 var app = builder.Build();

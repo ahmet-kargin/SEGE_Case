@@ -4,9 +4,9 @@ public class EnemyStatsCalculator
 {
     public int EnemyHP(int Alchemy, int Archery, int Dexterity, int Endurance, int Intelligence, int Luck, int Perception, int Resilience, int Stealth, int Strength, int Wisdom, int Level, int Rarity, int StarCount, int PinkStarCount)
     {
-        var b = 2.14; // Attribute Exponent
-        var c = 0.2 * Level; // Level Modifier (Adjusted for better progression)
-        var d = 0.5; //Exponent Factor
+        var b = 2.14; 
+        var c = 0.2 * Level; 
+        var d = 0.5; 
         var r = Rarity;
         var MaxLevel = StarCount * 10;
         var p = 1.06;
@@ -15,9 +15,9 @@ public class EnemyStatsCalculator
 
     public int EnemyATK(int Alchemy, int Archery, int Dexterity, int Endurance, int Intelligence, int Luck, int Perception, int Resilience, int Stealth, int Strength, int Wisdom, int Level, int Rarity, int StarCount, int PinkStarCount)
     {
-        var b = 2.14; // Attribute Exponent
-        var c = 0.2 * Level; // Level Modifier (Adjusted for better progression)
-        var d = 0.5; // Exponent Factor
+        var b = 2.14;
+        var c = 0.2 * Level;
+        var d = 0.5;
         var r = Rarity;
         var MaxLevel = StarCount * 10;
         var p = 1.06;
@@ -27,9 +27,9 @@ public class EnemyStatsCalculator
 
     public int EnemyDEF(int Alchemy, int Archery, int Dexterity, int Endurance, int Intelligence, int Luck, int Perception, int Resilience, int Stealth, int Strength, int Wisdom, int Level, int Rarity, int StarCount, int PinkStarCount)
     {
-        var b = 2.14; // Attribute Exponent
-        var c = 0.2 * Level; // Level Modifier (Adjusted for better progression)
-        var d = 0.0338; // Exponent Factor
+        var b = 2.14;
+        var c = 0.2 * Level;
+        var d = 0.0338;
         var r = Rarity;
         var MaxLevel = StarCount * 10;
         var p = 1.06;
@@ -39,9 +39,9 @@ public class EnemyStatsCalculator
 
     public int EnemySPD(int Alchemy, int Archery, int Dexterity, int Endurance, int Intelligence, int Luck, int Perception, int Resilience, int Stealth, int Strength, int Wisdom, int Level, int Rarity, int StarCount, int PinkStarCount)
     {
-        var b = 1.07; // Attribute Exponent
-        var c = 0.2 * Level; // Level Modifier (Adjusted for better progression)
-        var d = 0.0116; // Exponent Factor
+        var b = 1.07;
+        var c = 0.2 * Level;
+        var d = 0.0116;
         var r = Rarity;
         var MaxLevel = StarCount * 10;
         var p = 1.06;
@@ -51,9 +51,9 @@ public class EnemyStatsCalculator
 
     public double EnemyCRATE(int Alchemy, int Archery, int Dexterity, int Endurance, int Intelligence, int Luck, int Perception, int Resilience, int Stealth, int Strength, int Wisdom, int Level, int Rarity, int StarCount, int PinkStarCount)
     {
-        var b = 1.07; // Attribute Exponent
-        var c = 0.2 * Level; // Level Modifier (Adjusted for better progression)
-        var d = 0.0116; // Exponent Factor
+        var b = 1.07;
+        var c = 0.2 * Level;
+        var d = 0.0116;
         var r = Rarity;
         var MaxLevel = StarCount * 10;
         var p = 1.06;
@@ -63,9 +63,9 @@ public class EnemyStatsCalculator
 
     public double EnemyCDMG(int Alchemy, int Archery, int Dexterity, int Endurance, int Intelligence, int Luck, int Perception, int Resilience, int Stealth, int Strength, int Wisdom, int Level, int Rarity, int StarCount, int PinkStarCount)
     {
-        var b = 1.07; // Attribute Exponent
-        var c = 0.2 * Level; // Level Modifier (Adjusted for better progression)
-        var d = 0.0116; // Exponent Factor
+        var b = 1.07;
+        var c = 0.2 * Level;
+        var d = 0.0116;
         var r = Rarity;
         var MaxLevel = StarCount * 10;
         var p = 1.06;
@@ -75,9 +75,9 @@ public class EnemyStatsCalculator
 
     public int EnemyRES(int Alchemy, int Archery, int Dexterity, int Endurance, int Intelligence, int Luck, int Perception, int Resilience, int Stealth, int Strength, int Wisdom, int Level, int Rarity, int StarCount, int PinkStarCount)
     {
-        var b = 1.07; // Attribute Exponent
-        var c = 0.2 * Level; // Level Modifier (Adjusted for better progression)
-        var d = 0.0116; // Exponent Factor
+        var b = 1.07;
+        var c = 0.2 * Level;
+        var d = 0.0116; 
         var r = Rarity;
         var MaxLevel = StarCount * 10;
         var p = 1.06;
@@ -87,9 +87,9 @@ public class EnemyStatsCalculator
 
     public int EnemyACC(int Alchemy, int Archery, int Dexterity, int Endurance, int Intelligence, int Luck, int Perception, int Resilience, int Stealth, int Strength, int Wisdom, int Level, int Rarity, int StarCount, int PinkStarCount)
     {
-        var b = 1; // Attribute Exponent
-        var c = 0.2 * Level; // Level Modifier (Adjusted for better progression)
-        var d = 0.0116; // Exponent Factor
+        var b = 1;
+        var c = 0.2 * Level;
+        var d = 0.0116;
         var r = Rarity;
         var MaxLevel = StarCount * 10;
         var p = 1.06;

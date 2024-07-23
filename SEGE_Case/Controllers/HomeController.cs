@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SEGE_Case.Domain.Entities;
-using SEGE_Case.Models;
 using SEGE_Case.Services.Services;
-using System.Diagnostics;
 
 namespace SEGE_Case.Controllers;
 
@@ -28,13 +26,16 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> SimulateBattle(Hero hero, Enemy enemy, int numberOfRounds)
     {
+        // Hero'nun istatistiklerini hesapla
         _heroService.CalculateHeroStats(hero);
+
+        // Enemy'nin istatistiklerini hesapla ve kaydet
         await _enemyService.SaveEnemyStatsAsync(enemy);
 
-        // Simulate the battle
+        // Savaşı simüle et
         var result = _battleSimulator.SimulateBattle(hero, enemy, numberOfRounds);
 
-        // Return the battle result view with the result
+        // Savaş sonucunu view'a döndür
         return View("BattleResult", result);
     }
 }

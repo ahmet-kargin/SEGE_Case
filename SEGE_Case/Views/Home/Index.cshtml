@@ -1,17 +1,44 @@
 ﻿@model SEGE_Case.WebUI.Models.BattleViewModel
 
-<form asp-action="SimulateBattle" method="post">
-    <div>
-        <label for="heroName">Hero Name</label>
-        <input type="text" id="heroName" name="hero.Name" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Simulate Battle</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <form asp-action="SimulateBattle" method="post">
+            <div class="form-group row">
+                <label for="heroName" class="col-sm-2 col-form-label">Hero Name</label>
+                <div class="col-sm-10">
+                    <input type="text" id="heroName" name="hero.Name" class="form-control" required />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="enemyName" class="col-sm-2 col-form-label">Enemy Name</label>
+                <div class="col-sm-10">
+                    <input type="text" id="enemyName" name="enemy.Name" class="form-control" required />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="numberOfRounds" class="col-sm-2 col-form-label">Number of Rounds</label>
+                <div class="col-sm-10">
+                    <input type="number" id="numberOfRounds" name="numberOfRounds" class="form-control" min="1" max="100" required />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <button type="submit" class="btn btn-primary btn-block">Simulate Battle</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div>
-        <label for="enemyName">Enemy Name</label>
-        <input type="text" id="enemyName" name="enemy.Name" />
-    </div>
-    <div>
-        <label for="numberOfRounds">Number of Rounds</label>
-        <input type="number" id="numberOfRounds" name="numberOfRounds" />
-    </div>
-    <button type="submit">Simulate Battle</button>
-</form>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
