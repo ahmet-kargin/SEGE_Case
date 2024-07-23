@@ -1,0 +1,17 @@
+﻿@model SEGE_Case.WebUI.Models.BattleViewModel
+
+<form asp-action="SimulateBattle" method="post">
+    <div>
+        <label for="heroName">Hero Name</label>
+        <input type="text" id="heroName" name="hero.Name" />
+    </div>
+    <div>
+        <label for="enemyName">Enemy Name</label>
+        <input type="text" id="enemyName" name="enemy.Name" />
+    </div>
+    <div>
+        <label for="numberOfRounds">Number of Rounds</label>
+        <input type="number" id="numberOfRounds" name="numberOfRounds" />
+    </div>
+    <button type="submit">Simulate Battle</button>
+</form>

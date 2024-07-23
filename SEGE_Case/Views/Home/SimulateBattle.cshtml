@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Battle Simulation";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="SimulateBattle" method="post">
+    <fieldset>
+        <legend>Hero Attributes</legend>
+        <div class="form-group">
+            <label for="heroAlchemy">Alchemy</label>
+            <input type="number" id="heroAlchemy" name="hero.Alchemy" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="heroArchery">Archery</label>
+            <input type="number" id="heroArchery" name="hero.Archery" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="heroDexterity">Dexterity</label>
+            <input type="number" id="heroDexterity" name="hero.Dexterity" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="heroEndurance">Endurance</label>
+            <input type="number" id="heroEndurance" name="hero.Endurance" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="heroIntelligence">Intelligence</label>
+            <input type="number" id="heroIntelligence" name="hero.Intelligence" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="heroLuck">Luck (1-10)</label>
+            <input type="number" id="heroLuck" name="hero.Luck" class="form-control" min="1" max="10" required />
+        </div>
+        <div class="form-group">
+            <label for="heroPerception">Perception</label>
+            <input type="number" id="heroPerception" name="hero.Perception" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="heroResilience">Resilience</label>
+            <input type="number" id="heroResilience" name="hero.Resilience" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="heroStealth">Stealth</label>
+            <input type="number" id="heroStealth" name="hero.Stealth" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="heroStrength">Strength</label>
+            <input type="number" id="heroStrength" name="hero.Strength" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="heroWisdom">Wisdom</label>
+            <input type="number" id="heroWisdom" name="hero.Wisdom" class="form-control" min="0" max="100" required />
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Enemy Attributes</legend>
+        <div class="form-group">
+            <label for="enemyAlchemy">Alchemy</label>
+            <input type="number" id="enemyAlchemy" name="enemy.Alchemy" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="enemyArchery">Archery</label>
+            <input type="number" id="enemyArchery" name="enemy.Archery" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="enemyDexterity">Dexterity</label>
+            <input type="number" id="enemyDexterity" name="enemy.Dexterity" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="enemyEndurance">Endurance</label>
+            <input type="number" id="enemyEndurance" name="enemy.Endurance" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="enemyIntelligence">Intelligence</label>
+            <input type="number" id="enemyIntelligence" name="enemy.Intelligence" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="enemyLuck">Luck (1-10)</label>
+            <input type="number" id="enemyLuck" name="enemy.Luck" class="form-control" min="1" max="10" required />
+        </div>
+        <div class="form-group">
+            <label for="enemyPerception">Perception</label>
+            <input type="number" id="enemyPerception" name="enemy.Perception" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="enemyResilience">Resilience</label>
+            <input type="number" id="enemyResilience" name="enemy.Resilience" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="enemyStealth">Stealth</label>
+            <input type="number" id="enemyStealth" name="enemy.Stealth" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="enemyStrength">Strength</label>
+            <input type="number" id="enemyStrength" name="enemy.Strength" class="form-control" min="0" max="100" required />
+        </div>
+        <div class="form-group">
+            <label for="enemyWisdom">Wisdom</label>
+            <input type="number" id="enemyWisdom" name="enemy.Wisdom" class="form-control" min="0" max="100" required />
+        </div>
+    </fieldset>
+
+    <div class="form-group">
+        <label for="numberOfRounds">Number of Rounds</label>
+        <input type="number" id="numberOfRounds" name="numberOfRounds" class="form-control" min="1" max="100" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Simulate Battle</button>
+</form>
+
+@section Scripts {
+    <script>
+        // Optional: Add JavaScript to enhance form functionality or validations
+    </script>
+}
