@@ -1,0 +1,143 @@
+﻿@model SEGE_Case.WebUI.Models.ManageEntitiesViewModel
+
+@{
+    ViewData["Title"] = "Manage Entities";
+}
+<style>
+    .form-control {
+        width: 100%; 
+        max-width: 150px;
+    }
+
+    .table th, .table td {
+        text-align: center; 
+    }
+</style>
+
+<h1>Manage Heroes and Enemies</h1>
+
+<h2>Heroes</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>HeroName</th>
+            <th>Alchemy</th>
+            <th>Archery</th>
+            <th>Dexterity</th>
+            <th>Endurance</th>
+            <th>Intelligence</th>
+            <th>Luck</th>
+            <th>Perception</th>
+            <th>Resilience</th>
+            <th>Stealth</th>
+            <th>Strength</th>
+            <th>Wisdom</th>
+            <th>Level</th>
+            <th>Rarity</th>
+            <th>Star Count</th>
+            <th>Pink Star Count</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hero in Model.Heroes)
+        {
+            <tr>
+                @using (Html.BeginForm("UpdateHero", "Home", FormMethod.Post))
+                {
+                    <td style="width:100px;">@Html.TextBox("Name", hero.Name, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Alchemy", hero.Alchemy, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Archery", hero.Archery, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Dexterity", hero.Dexterity, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Endurance", hero.Endurance, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Intelligence", hero.Intelligence, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Luck", hero.Luck, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Perception", hero.Perception, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Resilience", hero.Resilience, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Stealth", hero.Stealth, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Strength", hero.Strength, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Wisdom", hero.Wisdom, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Level", hero.Level, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Rarity", hero.Rarity, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("StarCount", hero.StarCount, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("PinkStarCount", hero.PinkStarCount, new { @class = "form-control" })</td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </td>
+                }
+                <td>
+                    @using (Html.BeginForm("DeleteHero", "Home", FormMethod.Post))
+                    {
+                        @Html.Hidden("Name", hero.Name)
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    }
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Enemies</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>EnemyName</th>
+            <th>Alchemy</th>
+            <th>Archery</th>
+            <th>Dexterity</th>
+            <th>Endurance</th>
+            <th>Intelligence</th>
+            <th>Luck</th>
+            <th>Perception</th>
+            <th>Resilience</th>
+            <th>Stealth</th>
+            <th>Strength</th>
+            <th>Wisdom</th>
+            <th>Level</th>
+            <th>Rarity</th>
+            <th>Star Count</th>
+            <th>Pink Star Count</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var enemy in Model.Enemies)
+        {
+            <tr>
+                @using (Html.BeginForm("UpdateEnemy", "Home", FormMethod.Post))
+                {
+                    <td>@Html.TextBox("Name", enemy.Name, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Alchemy", enemy.Alchemy, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Archery", enemy.Archery, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Dexterity", enemy.Dexterity, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Endurance", enemy.Endurance, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Intelligence", enemy.Intelligence, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Luck", enemy.Luck, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Perception", enemy.Perception, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Resilience", enemy.Resilience, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Stealth", enemy.Stealth, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Strength", enemy.Strength, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Wisdom", enemy.Wisdom, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Level", enemy.Level, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("Rarity", enemy.Rarity, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("StarCount", enemy.StarCount, new { @class = "form-control" })</td>
+                    <td>@Html.TextBox("PinkStarCount", enemy.PinkStarCount, new { @class = "form-control" })</td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </td>
+                }
+                <td>
+                    @using (Html.BeginForm("DeleteEnemy", "Home", FormMethod.Post))
+                    {
+                        @Html.Hidden("Name", enemy.Name)
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    }
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>

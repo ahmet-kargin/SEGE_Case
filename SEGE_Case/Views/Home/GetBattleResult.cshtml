@@ -1,0 +1,104 @@
+﻿@model SEGE_Case.WebUI.Models.BattleResults
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Battle Results</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Battle Results</h2>
+
+        <!-- Form için bir alan ekleyebilirsiniz, eğer yeniden simülasyon yapmak isterseniz -->
+        <form id="simulationForm" method="get">
+            <div class="form-group">
+                <label for="HeroId">Hero ID:</label>
+                <input type="text" class="form-control" id="HeroId" name="HeroId" required>
+            </div>
+            <div class="form-group">
+                <label for="EnemyId">Enemy ID:</label>
+                <input type="text" class="form-control" id="EnemyId" name="EnemyId" required>
+            </div>
+            <div class="form-group">
+                <label for="Level">Level:</label>
+                <input type="number" class="form-control" id="Level" name="Level" required>
+            </div>
+            <div class="form-group">
+                <label for="Rarity">Rarity:</label>
+                <input type="number" class="form-control" id="Rarity" name="Rarity" required>
+            </div>
+            <div class="form-group">
+                <label for="StarCount">Star Count:</label>
+                <input type="number" class="form-control" id="StarCount" name="StarCount" required>
+            </div>
+            <div class="form-group">
+                <label for="PinkStarCount">Pink Star Count:</label>
+                <input type="number" class="form-control" id="PinkStarCount" name="PinkStarCount" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Simulate Battle</button>
+        </form>
+
+        <!-- Simülasyon sonuçlarını görüntülemek için tablo -->
+        <h3 class="mt-5">Battle Details</h3>
+        <table class="table table-striped" id="resultsTable">
+            <thead>
+                <tr>
+                    <th>Round</th>
+                    <th>Hero Damage</th>
+                    <th>Enemy Damage</th>
+                    <th>Hero Health</th>
+                    <th>Enemy Health</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JavaScript ile doldurulacak -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Formun gönderilmesini kontrol et
+            $('#simulationForm').on('submit', function (e) {
+                e.preventDefault(); // Formun normal gönderilmesini engelle
+
+                // Formdan verileri al
+                var formData = $(this).serialize();
+
+                // AJAX çağrısı yap
+                $.ajax({
+                    url: '@Url.Action("SimulateBattle", "Home")', // Simülasyon için Controller ve Action
+                    type: 'POST',
+                    data: formData,
+                    success: function (data) {
+                        // Tabloyu temizle
+                        $('#resultsTable tbody').empty();
+
+                        // Gelen sonuçları tabloya ekle
+                        data.Rounds.forEach(function (round) {
+                            $('#resultsTable tbody').append(
+                                `<tr>
+                                            <td>${round.RoundNumber}</td>
+                                            <td>${round.HeroDamage}</td>
+                                            <td>${round.EnemyDamage}</td>
+                                            <td>${round.HeroHealth}</td>
+                                            <td>${round.EnemyHealth}</td>
+                                        </tr>`
+                            );
+                        });
+                    },
+                    error: function () {
+                        alert('Error occurred while simulating the battle.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

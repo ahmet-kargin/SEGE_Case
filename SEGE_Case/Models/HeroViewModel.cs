@@ -1,13 +1,19 @@
-﻿using Amazon.DynamoDBv2.DataModel;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
-public class Hero
+namespace SEGE_Case.WebUI.Models;
+
+public class HeroViewModel
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public ObjectId HeroId { get; set; }
     public string Name { get; set; }
+    public int Level { get; set; }
+    public int Rarity { get; set; }
+    public int StarCount { get; set; }
+    public int PinkStarCount { get; set; }
+
     public int Alchemy { get; set; }
     public int Archery { get; set; }
     public int Dexterity { get; set; }
@@ -19,18 +25,5 @@ public class Hero
     public int Stealth { get; set; }
     public int Strength { get; set; }
     public int Wisdom { get; set; }
-    public int Level { get; set; }
-    public int Rarity { get; set; }
-    public int StarCount { get; set; }
-    public int PinkStarCount { get; set; }
-
-    // Calculated attributes
-    public int HP { get; set; }
-    public int ATK { get; set; }
-    public int DEF { get; set; }
-    public int SPD { get; set; }
-    public double CRATE { get; set; }
-    public double CDMG { get; set; }
-    public int RES { get; set; }
-    public int ACC { get; set; }
 }
+

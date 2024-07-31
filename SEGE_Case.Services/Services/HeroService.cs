@@ -1,51 +1,44 @@
-﻿using Amazon.DynamoDBv2.DataModel;
-using SEGE_Case.Domain.Entities;
+﻿using MongoDB.Driver;
+using SEGE_Case.Infrastructure.Connection;
 using SEGE_Case.Services.Stats;
 
 namespace SEGE_Case.Services.Services;
 
 public class HeroService
 {
-    // Yapıcı metod: IDynamoDBContext nesnesini alır ve _context alanına atar.
-    private readonly IDynamoDBContext _context;
-    
-    public HeroService(IDynamoDBContext context)
+    private readonly IMongoCollection<Hero> _collection;
+    private readonly HeroStatsCalculator _calculator;
+
+    public HeroService(MongoDBHelper mongoDBHelper)
     {
-        _context = context;
+        _collection = mongoDBHelper.GetHeroesCollection();
+        _calculator = new HeroStatsCalculator();
     }
-    // Kahramanın istatistiklerini hesaplar ve kahraman nesnesine atar.
-    public void CalculateHeroStats(Hero hero)
+
+    public async Task CalculateHeroStatsAsync(string heroId)
     {
-        // HeroStatsCalculator sınıfından bir örnek oluşturur.
-        var calculator = new HeroStatsCalculator();
+        // MongoDB'den belirli bir id ile kahramanı alır.
+        var hero = await _collection.Find(h => h.HeroId.ToString() == heroId).FirstOrDefaultAsync();
+        if (hero != null)
+        {
+            // İstatistikleri hesaplar ve günceller.
+            hero.HP = _calculator.HeroHP(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception, hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
+            hero.ATK = _calculator.HeroATK(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception, hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
+            hero.DEF = _calculator.HeroDEF(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception, hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
+            hero.SPD = _calculator.HeroSPD(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception, hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
+            hero.CRATE = _calculator.HeroCRATE(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception, hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
+            hero.CDMG = _calculator.HeroCDMG(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception, hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
+            hero.RES = _calculator.HeroRES(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception, hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
+            hero.ACC = _calculator.HeroACC(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception, hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
 
-        // Kahramanın HP (sağlık puanı) istatistiğini hesaplar.
-        hero.HP = calculator.HeroHP(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception, hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
+            // Güncellenmiş kahramanı MongoDB'ye kaydeder.
+            await _collection.ReplaceOneAsync(h => h.HeroId.ToString() == heroId, hero);
+        }
+    }
 
-        // Kahramanın ATK (saldırı gücü) istatistiğini hesaplar.
-        hero.ATK = calculator.HeroATK(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception, hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
-
-        // Kahramanın DEF (savunma gücü) istatistiğini hesaplar.
-        hero.DEF = calculator.HeroDEF(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception, hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
-
-        // Kahramanın SPD (hız) istatistiğini hesaplar.
-        hero.SPD = calculator.HeroSPD(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception, hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
-
-        // Kahramanın CRATE (kritik vuruş oranı) istatistiğini hesaplar.
-        hero.CRATE = calculator.HeroCRATE(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception, hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
-
-        // Kahramanın CDMG (kritik hasar) istatistiğini hesaplar.
-        hero.CDMG = calculator.HeroCDMG(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception,
-            hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
-
-        // Kahramanın RES (direnç) istatistiğini hesaplar.
-        hero.RES = calculator.HeroRES(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception,
-            hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
-
-        // Kahramanın ACC (doğru vuruş oranı) istatistiğini hesaplar.
-        hero.ACC = calculator.HeroACC(hero.Alchemy, hero.Archery, hero.Dexterity, hero.Endurance, hero.Intelligence, hero.Luck, hero.Perception,
-            hero.Resilience, hero.Stealth, hero.Strength, hero.Wisdom, hero.Level, hero.Rarity, hero.StarCount, hero.PinkStarCount);
-
-        
+    // Tüm kahramanları döndüren metod
+    public async Task<List<Hero>> GetAllHeroesAsync()
+    {
+        return await  _collection.Find(_ => true).ToListAsync();
     }
 }

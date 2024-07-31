@@ -1,54 +1,78 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
+using MongoDB.Driver;
 using SEGE_Case.Application.Interfaces;
 using SEGE_Case.Domain.Entities;
+using SEGE_Case.Infrastructure.Connection;
 
 namespace SEGE_Case.Infrastructure.Repositories;
 
 public class EnemyRepository : IEnemyRepository
 {
-    // DynamoDB bağlamını temsil eden IDynamoDBContext nesnesini tutar.
-    private readonly IDynamoDBContext _context;
+    private readonly IMongoCollection<Enemy> _collection;
 
-    // EnemyRepository sınıfının yapıcı metodu, DynamoDB bağlamını alır.
-    public EnemyRepository(IDynamoDBContext context)
+    public EnemyRepository(MongoDBHelper mongoDBHelper)
     {
-        _context = context;
+        _collection = mongoDBHelper.GetEnemiesCollection();
     }
 
-    // Belirli bir id ile bir düşmanı asenkron olarak alır.
     public async Task<Enemy> GetEnemyByIdAsync(string id)
     {
-        // DynamoDB'den belirli bir id ile düşmanı yükler ve döner.
-        return await _context.LoadAsync<Enemy>(id);
+        // MongoDB'den belirli bir id ile düşmanı alır.
+        return await _collection.Find(e => e.EnemyId.ToString() == id).FirstOrDefaultAsync();
     }
 
-    // Bir Enemy nesnesini asenkron olarak kaydeder.
+    public async Task<Enemy> GetEnemyByNameAsync(string name)
+    {
+        // MongoDB'den belirli bir id ile düşmanı alır.
+        return await _collection.Find(e => e.Name.ToString() == name).FirstOrDefaultAsync();
+    }
+
     public async Task SaveEnemyAsync(Enemy enemy)
     {
-        // DynamoDB'ye verilen düşmanı kaydeder.
-        await _context.SaveAsync(enemy);
+        // MongoDB'ye düşmanı kaydeder.
+        await _collection.ReplaceOneAsync(e => e.EnemyId == enemy.EnemyId, enemy, new ReplaceOptions { IsUpsert = true });
     }
 
-    // Belirli bir id ile düşmanı asenkron olarak siler.
     public async Task DeleteEnemyAsync(string id)
     {
-        // Silinecek düşmanı id'ye göre alır.
-        var enemy = await GetEnemyByIdAsync(id);
-        if (enemy != null)
-        {
-            // Düşmanı DynamoDB'den siler.
-            await _context.DeleteAsync(enemy);
-        }
+        // MongoDB'den belirli bir id ile düşmanı siler.
+        await _collection.DeleteOneAsync(e => e.Name.ToString() == id);
     }
 
-    // Tüm düşmanları asenkron olarak alır.
+
     public async Task<IEnumerable<Enemy>> GetAllEnemiesAsync()
     {
-        // DynamoDB'de Enemy tablosundaki tüm verileri tarar.
-        var search = _context.ScanAsync<Enemy>(new List<ScanCondition>());
+        // MongoDB'deki tüm düşmanları alır.
+        return await _collection.Find(_ => true).ToListAsync();
+    }
+    // MongoDB'ye düşmanı ekler.
+    public async Task CreateEnemyAsync(Enemy enemy)
+    {
+        await _collection.InsertOneAsync(enemy);
+    }
 
-        // Tarama sonuçlarını alır ve döner.
-        var results = await search.GetNextSetAsync();
-        return results;
+    public async Task UpdateEnemyAsync(Enemy enemy)
+    {
+        // MongoDB'de belirli bir id ile düşmanı günceller.
+        var filter = Builders<Enemy>.Filter.Eq(e => e.EnemyId, enemy.EnemyId);
+        var update = Builders<Enemy>.Update
+            .Set(e => e.Name, enemy.Name)
+            .Set(e => e.Alchemy, enemy.Alchemy)
+            .Set(e => e.Archery, enemy.Archery)
+            .Set(e => e.Dexterity, enemy.Dexterity)
+            .Set(e => e.Endurance, enemy.Endurance)
+            .Set(e => e.Intelligence, enemy.Intelligence)
+            .Set(e => e.Luck, enemy.Luck)
+            .Set(e => e.Perception, enemy.Perception)
+            .Set(e => e.Resilience, enemy.Resilience)
+            .Set(e => e.Stealth, enemy.Stealth)
+            .Set(e => e.Strength, enemy.Strength)
+            .Set(e => e.Wisdom, enemy.Wisdom)
+            .Set(e => e.Level, enemy.Level)
+            .Set(e => e.Rarity, enemy.Rarity)
+            .Set(e => e.StarCount, enemy.StarCount)
+            .Set(e => e.PinkStarCount, enemy.PinkStarCount);
+
+        await _collection.UpdateOneAsync(filter, update);
     }
 }

@@ -1,8 +1,8 @@
-﻿@{
+﻿@model SEGE_Case.WebUI.Models.BattleViewModel
+
+@{
     ViewData["Title"] = "Battle Simulation";
 }
-
-<h2>@ViewData["Title"]</h2>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,168 +10,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <title>Simulate Battle</title>
     <style>
         fieldset {
             margin-bottom: 20px;
         }
+
+        .form-control-sm {
+            height: calc(1.25em + .5rem + 2px);
+            padding: .25rem .5rem;
+            font-size: .875rem;
+            line-height: 1.5;
+            border-radius: .2rem;
+        }
+
+        .btn-sm {
+            padding: .25rem .5rem;
+            font-size: .875rem;
+            line-height: 1.5;
+            border-radius: .2rem;
+        }
+
+        .form-control.custom-width {
+            max-width: 300px; /* Input genişliğini ayarlayabilirsiniz */
+        }
+
+        .btn.custom-width {
+            width: 200px; /* Buton genişliğini ayarlayabilirsiniz */
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <form asp-action="SimulateBattle" method="post">
-        <fieldset>
-            <legend>Hero Attributes</legend>
-            <div class="form-group row">
-                <label for="heroAlchemy" class="col-sm-2 col-form-label">Alchemy</label>
-                <div class="col-sm-10">
-                    <input type="number" id="heroAlchemy" name="hero.Alchemy" class="form-control" min="0" max="100" required />
+    <div class="container mt-3">
+        @using (Html.BeginForm("SimulateBattle", "Home", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <fieldset>
+                        <legend>Select Hero</legend>
+                        <div class="form-group">
+                            <label for="HeroId">Hero:</label>
+                            <select class="form-control form-control-sm custom-width" id="HeroId" name="HeroId" required>
+                                @foreach (var hero in Model.Heroes)
+                                {
+                                    <option value="@hero.Name">@hero.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-md-6">
+                    <fieldset>
+                        <legend>Select Enemy</legend>
+                        <div class="form-group">
+                            <label for="EnemyId">Enemy:</label>
+                            <select class="form-control form-control-sm custom-width" id="EnemyId" name="EnemyId" required>
+                                @foreach (var enemy in Model.Enemies)
+                                {
+                                    <option value="@enemy.Name">@enemy.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="heroArchery" class="col-sm-2 col-form-label">Archery</label>
-                <div class="col-sm-10">
-                    <input type="number" id="heroArchery" name="hero.Archery" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="heroDexterity" class="col-sm-2 col-form-label">Dexterity</label>
-                <div class="col-sm-10">
-                    <input type="number" id="heroDexterity" name="hero.Dexterity" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="heroEndurance" class="col-sm-2 col-form-label">Endurance</label>
-                <div class="col-sm-10">
-                    <input type="number" id="heroEndurance" name="hero.Endurance" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="heroIntelligence" class="col-sm-2 col-form-label">Intelligence</label>
-                <div class="col-sm-10">
-                    <input type="number" id="heroIntelligence" name="hero.Intelligence" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="heroLuck" class="col-sm-2 col-form-label">Luck (1-10)</label>
-                <div class="col-sm-10">
-                    <input type="number" id="heroLuck" name="hero.Luck" class="form-control" min="1" max="10" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="heroPerception" class="col-sm-2 col-form-label">Perception</label>
-                <div class="col-sm-10">
-                    <input type="number" id="heroPerception" name="hero.Perception" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="heroResilience" class="col-sm-2 col-form-label">Resilience</label>
-                <div class="col-sm-10">
-                    <input type="number" id="heroResilience" name="hero.Resilience" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="heroStealth" class="col-sm-2 col-form-label">Stealth</label>
-                <div class="col-sm-10">
-                    <input type="number" id="heroStealth" name="hero.Stealth" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="heroStrength" class="col-sm-2 col-form-label">Strength</label>
-                <div class="col-sm-10">
-                    <input type="number" id="heroStrength" name="hero.Strength" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="heroWisdom" class="col-sm-2 col-form-label">Wisdom</label>
-                <div class="col-sm-10">
-                    <input type="number" id="heroWisdom" name="hero.Wisdom" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-        </fieldset>
 
-        <fieldset>
-            <legend>Enemy Attributes</legend>
-            <div class="form-group row">
-                <label for="enemyAlchemy" class="col-sm-2 col-form-label">Alchemy</label>
-                <div class="col-sm-10">
-                    <input type="number" id="enemyAlchemy" name="enemy.Alchemy" class="form-control" min="0" max="100" required />
+            <fieldset>
+                <legend>Battle Settings</legend>
+                <div class="form-group row">
+                    <label for="Level" class="col-sm-4 col-form-label">Level</label>
+                    <div class="col-sm-8">
+                        <input type="number" id="Level" name="Level" class="form-control form-control-sm custom-width" min="1" max="10" required />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="enemyArchery" class="col-sm-2 col-form-label">Archery</label>
-                <div class="col-sm-10">
-                    <input type="number" id="enemyArchery" name="enemy.Archery" class="form-control" min="0" max="100" required />
+                <div class="form-group row">
+                    <label for="Rarity" class="col-sm-4 col-form-label">Rarity</label>
+                    <div class="col-sm-8">
+                        <input type="number" id="Rarity" name="Rarity" class="form-control form-control-sm custom-width" min="1" max="10" required />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="enemyDexterity" class="col-sm-2 col-form-label">Dexterity</label>
-                <div class="col-sm-10">
-                    <input type="number" id="enemyDexterity" name="enemy.Dexterity" class="form-control" min="0" max="100" required />
+                <div class="form-group row">
+                    <label for="StarCount" class="col-sm-4 col-form-label">Star Count</label>
+                    <div class="col-sm-8">
+                        <input type="number" id="StarCount" name="StarCount" class="form-control form-control-sm custom-width" min="0" max="10" required />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="enemyEndurance" class="col-sm-2 col-form-label">Endurance</label>
-                <div class="col-sm-10">
-                    <input type="number" id="enemyEndurance" name="enemy.Endurance" class="form-control" min="0" max="100" required />
+                <div class="form-group row">
+                    <label for="PinkStarCount" class="col-sm-4 col-form-label">Pink Star Count</label>
+                    <div class="col-sm-8">
+                        <input type="number" id="PinkStarCount" name="PinkStarCount" class="form-control form-control-sm custom-width" min="0" max="10" required />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="enemyIntelligence" class="col-sm-2 col-form-label">Intelligence</label>
-                <div class="col-sm-10">
-                    <input type="number" id="enemyIntelligence" name="enemy.Intelligence" class="form-control" min="0" max="100" required />
+                <div class="form-group row">
+                    <label for="NumberOfRounds" class="col-sm-4 col-form-label">Number of Rounds</label>
+                    <div class="col-sm-8">
+                        <input type="number" id="NumberOfRounds" name="NumberOfRounds" class="form-control form-control-sm custom-width" min="1" max="100" required />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="enemyLuck" class="col-sm-2 col-form-label">Luck (1-10)</label>
-                <div class="col-sm-10">
-                    <input type="number" id="enemyLuck" name="enemy.Luck" class="form-control" min="1" max="10" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="enemyPerception" class="col-sm-2 col-form-label">Perception</label>
-                <div class="col-sm-10">
-                    <input type="number" id="enemyPerception" name="enemy.Perception" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="enemyResilience" class="col-sm-2 col-form-label">Resilience</label>
-                <div class="col-sm-10">
-                    <input type="number" id="enemyResilience" name="enemy.Resilience" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="enemyStealth" class="col-sm-2 col-form-label">Stealth</label>
-                <div class="col-sm-10">
-                    <input type="number" id="enemyStealth" name="enemy.Stealth" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="enemyStrength" class="col-sm-2 col-form-label">Strength</label>
-                <div class="col-sm-10">
-                    <input type="number" id="enemyStrength" name="enemy.Strength" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="enemyWisdom" class="col-sm-2 col-form-label">Wisdom</label>
-                <div class="col-sm-10">
-                    <input type="number" id="enemyWisdom" name="enemy.Wisdom" class="form-control" min="0" max="100" required />
-                </div>
-            </div>
-        </fieldset>
+            </fieldset>
 
-        <div class="form-group row">
-            <label for="numberOfRounds" class="col-sm-2 col-form-label">Number of Rounds</label>
-            <div class="col-sm-10">
-                <input type="number" id="numberOfRounds" name="numberOfRounds" class="form-control" min="1" max="100" required />
-            </div>
-        </div>
+            <button type="submit" class="btn btn-primary btn-sm btn-block custom-width">Simulate Battle</button>
 
-        <button type="submit" class="btn btn-primary btn-block">Simulate Battle</button>
-    </form>
-</div>
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger mt-3">
+                    <ul>
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <li>@error.ErrorMessage</li>
+                        }
+                    </ul>
+                </div>
+            }
+        }
+    </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

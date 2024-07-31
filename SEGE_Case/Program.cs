@@ -1,7 +1,7 @@
 ﻿using Amazon.DynamoDBv2;
-using Amazon.Extensions.NETCore.Setup;
 using Amazon.DynamoDBv2.DataModel;
 using SEGE_Case.Application.Interfaces;
+using SEGE_Case.Infrastructure.Connection;
 using SEGE_Case.Infrastructure.Repositories;
 using SEGE_Case.Services.Services;
 
@@ -35,9 +35,13 @@ builder.Services.AddScoped<BattleSimulator>();
 // HeroService sınıfını scoped olarak ekler.
 builder.Services.AddScoped<HeroService>();
 
+//Scoped gelen her istekte yeni instance oluşturur.
 // EnemyService sınıfını scoped olarak ekler.
 builder.Services.AddScoped<EnemyService>();
 
+//İlk istekte yeni instance oluşturur hep bunu kullanılır.
+builder.Services.AddSingleton<MongoDBHelper>();
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -57,6 +61,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=SimulateBattle}/{id?}");
 
 app.Run();

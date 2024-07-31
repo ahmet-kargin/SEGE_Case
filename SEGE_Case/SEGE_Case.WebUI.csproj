@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\_ViewImports.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.305.2" />
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.301" />
   </ItemGroup>
@@ -15,6 +19,18 @@
     <ProjectReference Include="..\SEGE_Case.Application\SEGE_Case.Application.csproj" />
     <ProjectReference Include="..\SEGE_Case.Infrastructure\SEGE_Case.Infrastructure.csproj" />
     <ProjectReference Include="..\SEGE_Case.Services\SEGE_Case.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\_ViewImports.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\_ViewImports.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\_ViewImports.cshtml" />
   </ItemGroup>
 
 </Project>

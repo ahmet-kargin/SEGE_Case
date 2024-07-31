@@ -1,12 +1,14 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace SEGE_Case.Domain.Entities;
 
-[DynamoDBTable("Enemies")]
 public class Enemy 
 {
-    [DynamoDBHashKey]
-    public string EnemyId { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public ObjectId EnemyId { get; set; }
     public string Name { get; set; }
     public int Alchemy { get; set; }
     public int Archery { get; set; }

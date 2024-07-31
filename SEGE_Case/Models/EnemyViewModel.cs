@@ -1,7 +1,18 @@
-﻿namespace SEGE_Case.WebUI.Models;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 
-public class Hero
+namespace SEGE_Case.WebUI.Models;
+
+public class EnemyViewModel
 {
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Name { get; set; }
+    public int Level { get; set; }
+    public int Rarity { get; set; }
+    public int StarCount { get; set; }
+    public int PinkStarCount { get; set; }
+
     public int Alchemy { get; set; }
     public int Archery { get; set; }
     public int Dexterity { get; set; }
@@ -14,4 +25,3 @@ public class Hero
     public int Strength { get; set; }
     public int Wisdom { get; set; }
 }
-
