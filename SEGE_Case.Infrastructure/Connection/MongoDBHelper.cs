@@ -12,7 +12,7 @@ public class MongoDBHelper
     public MongoDBHelper(IConfiguration configuration)
     {
         // MongoDB bağlantı dizesi ve veri tabanı adını ayarları
-        var connectionString = "mongodb+srv://Sege_Case:Sege_Case@sege.qchyfhk.mongodb.net/?retryWrites=true&w=majority&appName=SEGE";
+        var connectionString = "mongodb+srv://Sege_Case:Sege_CaseDeneme@sege.qchyfhk.mongodb.net/?retryWrites=true&w=majority&appName=SEGE";
         var databaseName = "Sege_Case";
         
 
